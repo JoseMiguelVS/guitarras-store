@@ -4,8 +4,19 @@ const props = defineProps({
     carrito: {
         type: Array,
         required: true
+    },
+    total:  {
+        type: Number,
+        required: true
     }
 })
+
+defineEmits([
+'agrega-uno', 
+'quita-uno',
+'elimina-guitarra',
+'vaciar-carrito'
+])
 
 </script>
 
@@ -23,8 +34,7 @@ const props = defineProps({
                         <img class="img-fluid" src="/img/carrito.png" alt="imagen carrito" />
 
                         <div id="carrito" class="bg-white p-3">
-                            <p v-if="carrito.length === 0" 
-                            class="text-center">El carrito esta vacio</p>
+                            <p v-if="carrito.length === 0" class="text-center">El carrito esta vacio</p>
                             <div v-else>
                                 <table class="w-100 table">
                                     <thead>
@@ -39,25 +49,27 @@ const props = defineProps({
                                     <tbody>
                                         <tr v-for="guitarra in carrito">
                                             <td>
-                                                <img class="img-fluid" 
-                                                :src="'/img/' + guitarra.imagen +'.jpg'" 
-                                                :alt="guitarra.nombre">
+                                                <img class="img-fluid" :src="'/img/' + guitarra.imagen + '.jpg'"
+                                                    :alt="guitarra.nombre">
                                             </td>
                                             <td>{{ guitarra.nombre }}</td>
                                             <td class="fw-bold">
                                                 ${{ guitarra.precio }}
                                             </td>
                                             <td class="flex align-items-start gap-4">
-                                                <button type="button" class="btn btn-dark">
+                                                <button type="button" class="btn btn-dark"
+                                                    @click="$emit('quita-uno', guitarra.id)">
                                                     -
                                                 </button>
-                                                {{  guitarra.cantidad }}
-                                                <button type="button" class="btn btn-dark">
+                                                {{ guitarra.cantidad }}
+                                                <button type="button" class="btn btn-dark"
+                                                    @click="$emit('agrega-uno', guitarra.id)">
                                                     +
                                                 </button>
                                             </td>
                                             <td>
-                                                <button class="btn btn-danger" type="button">
+                                                <button class="btn btn-danger" type="button"
+                                                    @click="$emit('elimina-guitarra', guitarra.id)">
                                                     X
                                                 </button>
                                             </td>
@@ -65,8 +77,11 @@ const props = defineProps({
                                     </tbody>
                                 </table>
 
-                                <p class="text-end">Total pagar: <span class="fw-bold">$899</span></p>
-                                <button class="btn btn-dark w-100 mt-3 p-2">Vaciar Carrito</button>
+                                <p class="text-end">Total pagar: <span class="fw-bold">${{ total }}</span></p>
+                                <button 
+                                @click="$emit('vaciar-carrito')"
+                                class="btn btn-dark w-100 mt-3 p-2"
+                                >Vaciar Carrito</button>
                             </div>
                         </div>
                     </div>
