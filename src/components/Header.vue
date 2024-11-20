@@ -51,7 +51,7 @@ const props = defineProps({
                                                 <button type="button" class="btn btn-dark">
                                                     -
                                                 </button>
-                                                1
+                                                {{  guitarra.cantidad }}
                                                 <button type="button" class="btn btn-dark">
                                                     +
                                                 </button>

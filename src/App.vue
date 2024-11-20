@@ -9,8 +9,8 @@ const guitarras = ref(db)
 const carrito = ref([])
 
 function agregarCarrito(guitarra) {
-  console.log('Agregando al carrito')
-  //Insertar objetos en carrito
+  const idCarrito = carrito.value.findIndex(g => g.id == guitarra.id)
+  guitarra.cantidad = 1  
   carrito.value.push(guitarra)
 }
 
